@@ -1,66 +1,131 @@
-import sys
-import toml
-from omegaconf import OmegaConf
-from query import VectaraQuery
-import os
-from flask import Flask, render_template, request
 
-from PIL import Image
-from functools import partial
-import openai 
-from langchain_openai import ChatOpenAI
-from langchain.agents import initialize_agent, AgentType
-from langchain_community.callbacks import StreamlitCallbackHandler
-from langchain_community.tools import DuckDuckGoSearchRun
-import json
+import os
 import requests
+import json
 import re
 from urllib.parse import quote
-from dotenv import load_dotenv
+from together import Together
+from markdown import markdown
+import config
+
 
 # Load environment variables from .env file
-load_dotenv()
 
-app = Flask(__name__)
-api_key = os.getenv("corpus_api_key")
+# Access the value of ai_key
+together_api_key = config.together_api_key
+# Set your Together.io API key
 
-customer_id = 2977603074
-corpus_ids = [7]
-vq = VectaraQuery(api_key, customer_id, corpus_ids)
 
-def query_web(query):
-    openai_api_key = os.getenv("OPENAI_API_KEY")
-    llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key, streaming=True)
-    search = DuckDuckGoSearchRun(name="Search")
-    search_agent = initialize_agent([search], llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, handle_parsing_errors=True)
-    response = search_agent.run(query)
-    return response
+# Initialize Together client
+client = Together(api_key=together_api_key)
 
-@app.route("/", methods=["GET", "POST"])
-def home():
-    if request.method == "POST":
-        query_str = request.form["query"]
-        search_internet = "search_internet" in request.form  # Check if the checkbox is clicked
-        
-        # Try getting response from VectaraQuery
-        response = vq.submit_query(query_str)
-        factual_consistency_score = get_factual_consistency_score(response)
-        
-        # If checkbox is clicked or response is not satisfactory, query the web
-        if search_internet or factual_consistency_score < 0.30:
-            response = query_web(query_str)
-        
-        return render_template("index.html", query=query_str, response=response, search_internet=search_internet)
-    
-    return render_template("index.html", query="", response="", search_internet=False)
+# Function to extract text between specified tags
+def extract_between_tags(text, start_tag, end_tag):
+    start_index = text.find(start_tag)
+    end_index = text.find(end_tag, start_index)
+    return text[start_index + len(start_tag):end_index - len(end_tag)]
 
-def get_factual_consistency_score(response):
-    factual_consistency_score = 0
-    # Extract factual consistency score from response
-    match = re.search(r'Factual Consistency Score: (\d+\.\d+)', response)
-    if match:
-        factual_consistency_score = float(match.group(1))
-    return factual_consistency_score
+class VectaraQuery():
+    def __init__(self, api_key: str, customer_id: int, corpus_ids: list):
+        self.customer_id = customer_id
+        self.corpus_ids = corpus_ids
+        self.api_key = api_key
 
-if __name__ == "__main__":
-    app.run(debug=True)
+    def submit_query(self, query_str: str):
+        corpora_key_list = [{
+            'customer_id': str(self.customer_id), 'corpus_id': str(corpus_id), 'lexical_interpolation_config': {'lambda': 0.025}
+        } for corpus_id in self.corpus_ids]
+
+        endpoint = f"https://api.vectara.io/v1/query"
+        start_tag = "%START_SNIPPET%"
+        end_tag = "%END_SNIPPET%"
+        headers = {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "customer-id": str(self.customer_id),
+            "x-api-key": self.api_key,
+            "grpc-timeout": "60S"
+        }
+        body = {
+            'query': [
+                {
+                    'query': query_str,
+                    'start': 0,
+                    'numResults': 7,
+                    'corpusKey': corpora_key_list,
+                    'context_config': {
+                        'sentences_before': 3,
+                        'sentences_after': 3,
+                        'start_tag': start_tag,
+                        'end_tag': end_tag,
+                    },
+                    'summary': [
+                        {
+                            'responseLang': 'eng',
+                            'maxSummarizedResults': 7,
+                            'factual_consistency_score': True
+                        }
+                    ]
+                }
+            ]
+        }
+
+        response = requests.post(endpoint, data=json.dumps(body), verify=True, headers=headers)
+        if response.status_code != 200:
+            print(f"Query failed with code {response.status_code}, reason {response.reason}, text {response.text}")
+            return "Sorry, something went wrong in my brain. Please try again later."
+
+        res = response.json()
+
+        summary = res['responseSet'][0]['summary'][0]['text']
+        factual_consistency_score = res['responseSet'][0]['summary'][0]['factualConsistency']['score']
+        responses = res['responseSet'][0]['response']
+        docs = res['responseSet'][0]['document']
+        pattern = r'\[\d{1,2}\]'
+        matches = [match.span() for match in re.finditer(pattern, summary)]
+
+        # figure out unique list of references
+        refs = []
+        for match in matches:
+            start, end = match
+            response_num = int(summary[start + 1:end - 1])
+            doc_num = responses[response_num - 1]['documentIndex']
+            metadata = {item['name']: item['value'] for item in docs[doc_num]['metadata']}
+            text = extract_between_tags(responses[response_num - 1]['text'], start_tag, end_tag)
+            url = f"{metadata['url']}#:~:text={quote(text)}"
+            if url not in refs:
+                refs.append(url)
+
+        # replace references with markdown links
+        refs_dict = {url: (inx + 1) for inx, url in enumerate(refs)}
+        for match in reversed(matches):
+            start, end = match
+            response_num = int(summary[start + 1:end - 1])
+            doc_num = responses[response_num - 1]['documentIndex']
+            metadata = {item['name']: item['value'] for item in docs[doc_num]['metadata']}
+            text = extract_between_tags(responses[response_num - 1]['text'], start_tag, end_tag)
+            url = f"{metadata['url']}#:~:text={quote(text)}"
+            citation_inx = refs_dict[url]
+            summary = summary[:start] + f'[[{citation_inx}]]({url})' + summary[end:]
+
+        # Format the response with factual consistency score
+        formatted_response = f"{summary}\n\nFactual Consistency Score: {factual_consistency_score}"
+       
+
+        # Check if the factual consistency score is below 0.20
+        if factual_consistency_score < 0.30:
+            # Use Together.io to generate a response
+            try:
+                response = client.chat.completions.create(
+                    model="mistralai/Mixtral-8x7B-Instruct-v0.1",
+                    messages=[{"role": "user", "content": query_str}],
+                )
+                together_response = response.choices[0].message.content
+                formatted_response = f"LLm's response since query not in corpus: {together_response}\n\nFactual Consistency Score for corpus provided reponse: {factual_consistency_score}"
+            except Exception as e:
+                print(f"Error occurred with Together.io: {e}")
+
+        html_response = markdown(formatted_response, extensions=['fenced_code'])
+
+
+        return html_response
