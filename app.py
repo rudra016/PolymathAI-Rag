@@ -29,7 +29,7 @@ corpus_ids = [7]
 vq = VectaraQuery(api_key, customer_id, corpus_ids)
 
 def query_web(query):
-    openai_api_key = os.getenv("openai_api_key")
+    openai_api_key = os.getenv("OPENAI_API_KEY")
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key, streaming=True)
     search = DuckDuckGoSearchRun(name="Search")
     search_agent = initialize_agent([search], llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, handle_parsing_errors=True)
