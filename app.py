@@ -42,7 +42,7 @@ def home():
         factual_consistency_score = get_factual_consistency_score(response)
         
         # If response is not satisfactory (score < 0.30), query the web
-        if factual_consistency_score < 0.30:
+        if factual_consistency_score > 0.30:
             response = query_web(query_str)
         
         return render_template("index.html", query=query_str, response=response)
