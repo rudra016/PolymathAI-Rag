@@ -19,7 +19,7 @@ from urllib.parse import quote
 import config
 load_dotenv()
 app = Flask(__name__)
-ai_key = os.getenv("corpus_key")
+api_key = os.getenv("corpus_key")
 
 customer_id = 2977603074
 corpus_ids = [7]
