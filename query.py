@@ -5,7 +5,6 @@ import re
 from urllib.parse import quote
 from together import Together
 from markdown import markdown
-import config
 
 
 # Load environment variables from .env file
