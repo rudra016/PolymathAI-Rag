@@ -16,7 +16,7 @@ import json
 import requests
 import re
 from urllib.parse import quote
-rom dotenv import load_dotenv
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
 load_dotenv()
