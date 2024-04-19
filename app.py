@@ -37,18 +37,19 @@ def query_web(query):
 def home():
     if request.method == "POST":
         query_str = request.form["query"]
+        search_internet = "search_internet" in request.form  # Check if the checkbox is clicked
         
         # Try getting response from VectaraQuery
         response = vq.submit_query(query_str)
         factual_consistency_score = get_factual_consistency_score(response)
         
-        # If response is not satisfactory (score < 0.30), query the web
-        if factual_consistency_score > 0.30:
+        # If checkbox is clicked or response is not satisfactory, query the web
+        if search_internet or factual_consistency_score < 0.30:
             response = query_web(query_str)
         
-        return render_template("index.html", query=query_str, response=response)
+        return render_template("index.html", query=query_str, response=response, search_internet=search_internet)
     
-    return render_template("index.html", query="", response="")
+    return render_template("index.html", query="", response="", search_internet=False)
 
 def get_factual_consistency_score(response):
     factual_consistency_score = 0
