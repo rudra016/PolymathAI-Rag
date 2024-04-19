@@ -16,17 +16,20 @@ import json
 import requests
 import re
 from urllib.parse import quote
-import config
+rom dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-api_key = config.corpus_api_key
+api_key = os.getenv("corpus_api_key")
 
 customer_id = 2977603074
 corpus_ids = [7]
 vq = VectaraQuery(api_key, customer_id, corpus_ids)
 
 def query_web(query):
-    openai_api_key = config.openai_api_key
+    openai_api_key = os.getenv("openai_api_key")
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", openai_api_key=openai_api_key, streaming=True)
     search = DuckDuckGoSearchRun(name="Search")
     search_agent = initialize_agent([search], llm, agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION, handle_parsing_errors=True)
