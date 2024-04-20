@@ -60,7 +60,7 @@ python app.py
 
 ## Feedback
 
-If you have any feedback, suggestions, or issues regarding Polymath AI, please don't hesitate to [contact us](mailto:contact@polymath.ai). Your input is valuable to us as we strive to improve and evolve our product.
+If you have any feedback, suggestions, or issues regarding Polymath AI, please don't hesitate to [contact us](mailto:mohammad.agwan@somaiya.edu). Your input is valuable to us as we strive to improve and evolve our product.
 
 
 Polymath AI - Your Ultimate Guide in the Dynamic World of Generative AI Documentation
