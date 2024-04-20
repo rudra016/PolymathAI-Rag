@@ -6,13 +6,13 @@ import re
 from urllib.parse import quote
 from together import Together
 from markdown import markdown
-import config
+
 
 
 # Load environment variables from .env file
 
 # Access the value of ai_key
-together_api_key = config.together_api_key
+together_api_key = os.getenv("together_api_key")
 # Set your Together.io API key
 
 
