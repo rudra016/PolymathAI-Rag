@@ -131,7 +131,7 @@ class VectaraQuery:
                     messages=[{"role": "user", "content": query_str}],
                 )
                 together_response = response.choices[0].message.content
-                formatted_response = f"LLm's response since query not in corpus: {together_response}\n\nFactual Consistency Score for corpus provided reponse: {factual_consistency_score}"
+                formatted_response = f"LLm's response since query not in corpus:\n\n {together_response}\n\nFactual Consistency Score for corpus provided reponse: {factual_consistency_score}"
             except Exception as e:
                 print(f"Error occurred with Together.io: {e}")
 
