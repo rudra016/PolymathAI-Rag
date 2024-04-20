@@ -58,18 +58,9 @@ python app.py
 
 5. Explore the informative responses provided by Polymath AI, including AI-generated summaries and additional LLm responses when factual consistency score is below the threshold.
 
-## Contributing
-
-We welcome contributions to enhance the functionality and capabilities of Polymath AI. Feel free to fork the repository, make your changes, and submit a pull request.
-
 ## Feedback
 
 If you have any feedback, suggestions, or issues regarding Polymath AI, please don't hesitate to [contact us](mailto:contact@polymath.ai). Your input is valuable to us as we strive to improve and evolve our product.
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
 
 Polymath AI - Your Ultimate Guide in the Dynamic World of Generative AI Documentation
