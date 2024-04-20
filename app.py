@@ -11,7 +11,7 @@ from langchain_openai import ChatOpenAI
 from langchain.agents import initialize_agent, AgentType
 from langchain_community.tools import DuckDuckGoSearchRun
 from dotenv import load_dotenv
-import config
+
 # Load environment variables from .env file
 load_dotenv()
 
