@@ -1,10 +1,10 @@
-# Polymath AI
+# ➗⚙️ Polymath AI
 
-## Introduction
+## 🗒️ Introduction
 
 Welcome to Polymath AI, your cutting-edge RAG (Retriever-Reader-Generator) question answering bot tailored for the Gen AI documentation landscape. Polymath AI integrates the power of various knowledge bases including Vectara, Langchain, OpenAI, Meta, and more, serving as your indispensable resource hub for navigating the vast terrain of generative AI technologies.
 
-## Key Features
+## 🌟 Key Features
 
 - **Comprehensive Knowledge Access**: Gain unparalleled access to a wealth of information and insights from diverse knowledge bases.
 - **Seamless Comparison**: Compare tools and resources across multiple platforms effortlessly.
