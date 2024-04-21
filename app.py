@@ -20,7 +20,7 @@ app = Flask(__name__)
 # Initialize VectaraQuery instance
 api_key =  os.getenv("corpus_api_key")  # Assuming the API key is stored in an environment variable
 customer_id = 2977603074
-corpus_ids = [7]
+corpus_ids = [7,8]
 vq = VectaraQuery(api_key, customer_id, corpus_ids)
 
 
