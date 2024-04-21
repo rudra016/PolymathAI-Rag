@@ -47,7 +47,7 @@ OPENAI_API_KEY=YOUR_OPENAI_API_KEY
 1. Run the Flask application.
 
 ```bash
-python app.py
+flask run
 ```
 
 2. Access Polymath AI through your web browser at `http://localhost:5000`.
