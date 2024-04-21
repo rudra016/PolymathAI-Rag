@@ -1,159 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Polymath AI</title>
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-      crossorigin="anonymous"
-    />
-    <style>
-      /* Custom CSS for response container */
-      .response-container {
-        background-color: #f0f0f0; /* Light grey background */
-        padding: 20px; /* Add padding for better spacing */
-        margin-top: 20px; /* Add margin to separate from other content */
-        border-radius: 5px; /* Add rounded corners for aesthetics */
-      }
-      .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-        margin-left: -20px;
-        
-      }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Polymath AI</title>
 
-      .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-      }
+  <link rel="icon" type="image/png" href="/static/favicon.png">
 
-      .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-      }
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  <style>
+    /* Custom CSS for response container */
+    .response-container {
+      max-width: 800px;
+      background-color: #f0f0f0;/* Light grey background */
+      padding: 20px; /* Add padding for better spacing */
+      margin-top: 20px; /* Add margin to separate from other content */
+      border-radius: 10px; /* Add rounded corners for aesthetics */
+      color: black;
+      border: 2px solid rgb(211, 0, 141);
+      margin-left: 22%;
+    }
 
-      .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-      }
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 40px;
+      height: 20px;
+      margin-left: 5px;
+      margin-top: 14px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-      input:checked + .slider {
-        background-color: #2196f3;
-      }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
 
-      input:focus + .slider {
-        box-shadow: 0 0 1px #2196f3;
-      }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 12px;
+      width: 12px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+    }
 
-      input:checked + .slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-      }
+    input:checked+.slider {
+      background-color: rgb(211, 0, 141);
+    }
 
-      /* Rounded sliders */
-      .slider.round {
-        border-radius: 34px;
-      }
+    input:focus+.slider {
+      box-shadow: 0 0 1px rgb(211, 0, 141);
+    }
 
-      .slider.round:before {
-        border-radius: 50%;
-      }
-      .labe {
-        text-decoration: solid;
-        color: white;
-        font-size: large;
-      }
-      body {
-        background-image: url("../static/back2.png");
-        background-size: cover; /* Cover the entire element */
-        background-position: center; /* Center the image */
-        background-repeat: no-repeat;
-      }
-    </style>
-  </head>
-  <body>
-    <nav class="navbar navbar-light bg-light">
-      <span class="navbar-brand mb-0 h1">Polymath AI</span>
-    </nav>
-    <div class="container">
-      <form method="post">
-        <div class="form-group">
-          <br />
-          <br />
-          <label class="labe" for="query">Search:</label>
-          <input
-            type="text"
-            class="form-control"
-            id="query"
-            name="query"
-            value="{{ query }}"
-            required
-          />
-        </div>
-        <div class="form-check form-switch">
-          <label class="switch">
-            <input
-              type="checkbox"
-              id="search_internet"
-              name="search_internet"
-              {%
-              if
-              search_internet
-              %}checked{%
-              endif
-              %}
-            />
+    input:checked+.slider:before {
+      -webkit-transform: translateX(19px);
+      -ms-transform: translateX(19px);
+      transform: translateX(19px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 10px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+
+    .labe {
+      text-decoration: solid;
+      color: white;
+      font-size: medium;
+    }
+
+    body {
+      background-image: url("/static/bg.jpg");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .input-group {
+      max-width: calc(100% - 10px); /* Adjusted width */
+      margin-right: 10px /* Added margin-right for spacing */
+
+    }
+
+    .input-group .form-control{
+      max-width: calc(50% - 10px); /* Adjusted width */
+      margin-right: 1px; /* Added margin-right for spacing */
+      
+    }
+
+    /* Adjusting the search bar */
+    #query {
+      width: calc(100% - 130px); /* Adjusted width */
+      height: 45px;
+      display: inline-block;
+    }
+
+    /* Adjusting the button */
+    .btn-primary {
+      height: 45px;
+      vertical-align: top;
+      background-color: black; /* Make the button black */
+      margin-left: 0.5px; /* Adjust margin to push it more towards the right */
+      border-color: black;
+      border-radius: 10px;
+    }
+
+    /* Adjusting the internet container */
+    .internet-container {
+      background-color: #f0f0f0;
+      padding: 20px;
+      margin-top: 20px; 
+      border-radius: 10px; 
+      color: black;
+      max-width: 800px;
+      border: 2px solid rgb(211, 0, 141);
+      margin-left: 22%;
+    }
+
+    .internet {
+      color: white;
+      margin-top: 30px;
+      margin-left: 22%;
+    }
+
+    /* Adjust the position of the switch */
+    .form-check {
+      display: flex;
+      align-items: center; /* Align vertically */
+      margin-bottom: 10px; /* Add margin bottom for better spacing */
+      
+    }
+
+    
+
+    .form-check .slider {
+      margin-left: 5px; /* Adjusted margin */
+    }
+
+    /* Adjusting position of form-check relative to input-group */
+    
+
+    .navbar-brand{
+      margin-left: 43%;
+    }
+    
+    .mr-2{
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+
+    .navbar-brand img{
+      height: 30px;
+      margin-right: 10px;
+      margin-bottom: 4px;
+    }
+
+    .container {
+      margin-left: 21%;
+    }
+
+  </style>
+</head>
+
+<body>
+  
+  <nav class="navbar navbar-light bg-light">
+    <span class="navbar-brand mb-0 h1">
+      <img src="/static/polyicon.png" alt="Polymath AI Logo">Polymath AI
+    </span>
+  </nav>
+  <div class="container">
+    <form method="post" class="d-flex align-items-start"> <!-- Flex container -->
+      <div class="form-group flex-grow-1"> <!-- Make it flex-grow to take remaining space -->
+        <br />
+        <br />
+        <label class="labe" for="query">Enter your query here:</label>
+        <div class="input-group"> <!-- Wrap input and button in input-group -->
+          <input type="text" class="form-control" id="query" name="query" placeholder="Ask Polymath..." required />
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Ask</button>
+          </div>
+          <label class="labe mr-2" for="search_internet">Internet Search</label>
+          <label class="switch mb-0">
+            <input type="checkbox" id="search_internet" name="search_internet" {% if search_internet %}checked{% endif
+              %} />
             <span class="slider round"></span>
           </label>
-
-          <label class="labe" for="search_internet"
-            >Search on the Internet</label
-          >
         </div>
-        <button type="submit" class="btn btn-primary">Ask</button>
-      </form>
-
-      <!-- Response Section -->
-      <div class="mt-4 response-container">
-        {% if response %}
-        <p class="">{{ response | safe }}</p>
-        {% endif %}
+          
+        </div>
       </div>
+      
+    </form>
 
-      <!-- Internet Search Results Section -->
-      {% if search_internet %}
-      <div class="mt-4">
-        
-        <p class="">{{ internet_response }}</p>
-      </div>
+    <!-- Response Section -->
+    <h4 class="internet">Here's your Response</h4>
+    <div class="mt-4 response-container">
+      {% if response %}
+      <p class="">{{ response | safe }}</p>
       {% endif %}
     </div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+
+    <!-- Internet Search Results Section -->
+    {% if search_internet %}
+    <h4 class="internet">Internet-generated Search</h4> <!-- New container heading -->
+    <div class="mt-4 internet-container"> <!-- Added internet-container class -->
+
+      <p class="">{{ internet_response }}</p>
+    </div>
+    {% endif %}
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+
 </html>
