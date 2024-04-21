@@ -52,7 +52,7 @@ flask run
 
 2. Access Polymath AI through your web browser at `http://localhost:5000`.
 
-3. Enter your query in the provided input field and click the "Search" button.
+3. Enter your query in the provided input field and click the "Ask" button.
 
 4. Optionally, check the "Search Internet" checkbox to include internet search results.
 
