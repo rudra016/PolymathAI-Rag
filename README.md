@@ -12,9 +12,9 @@ Welcome to Polymath AI, your cutting-edge RAG (Retriever-Reader-Generator) quest
 - **Factual Consistency Evaluation**: Evaluate the factual accuracy of AI-generated summaries with the Factual Consistency Score.
 - **Integration with LLm**: Seamless integration with LLm for additional responses when factual consistency score falls below a certain threshold.
 
-## Instructions
+## 👩‍🏫 Instructions
 
-### Setup
+### ⚙️ Setup
 
 1. Clone the Polymath AI repository from GitHub.
 
@@ -42,7 +42,7 @@ together_api_key=YOUR_TOGETHER_API_KEY
 OPENAI_API_KEY=YOUR_OPENAI_API_KEY
 ```
 
-### Usage
+### 🎠 Usage
 
 1. Run the Flask application.
 
@@ -58,7 +58,7 @@ flask run
 
 5. Explore the informative responses provided by Polymath AI, including AI-generated summaries and additional LLm responses when factual consistency score is below the threshold.
 
-## Feedback
+## 🔀 Feedback
 
 If you have any feedback, suggestions, or issues regarding Polymath AI, please don't hesitate to [contact us](mailto:mohammad.agwan@somaiya.edu). Your input is valuable to us as we strive to improve and evolve our product.
 
