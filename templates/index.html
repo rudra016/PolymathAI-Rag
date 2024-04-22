@@ -11,177 +11,213 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   <style>
-    /* Custom CSS for response container */
-    .response-container {
-      max-width: 800px;
-      background-color: #f0f0f0;/* Light grey background */
-      padding: 20px; /* Add padding for better spacing */
-      margin-top: 20px; /* Add margin to separate from other content */
-      border-radius: 10px; /* Add rounded corners for aesthetics */
-      color: black;
-      border: 2px solid rgb(211, 0, 141);
-      margin-left: 22%;
-    }
-
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 40px;
-      height: 20px;
-      margin-left: 5px;
-      margin-top: 14px;
-    }
-    
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-    }
-
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 12px;
-      width: 12px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-    }
-
-    input:checked+.slider {
-      background-color: rgb(211, 0, 141);
-    }
-
-    input:focus+.slider {
-      box-shadow: 0 0 1px rgb(211, 0, 141);
-    }
-
-    input:checked+.slider:before {
-      -webkit-transform: translateX(19px);
-      -ms-transform: translateX(19px);
-      transform: translateX(19px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-      border-radius: 10px;
-    }
-
-    .slider.round:before {
-      border-radius: 50%;
-    }
-
-    .labe {
-      text-decoration: solid;
-      color: white;
-      font-size: medium;
-    }
-
-    body {
-      background-image: url("/static/bg.jpg");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
-
-    .input-group {
-      max-width: calc(100% - 10px); /* Adjusted width */
-      margin-right: 10px /* Added margin-right for spacing */
-
-    }
-
-    .input-group .form-control{
-      max-width: calc(50% - 10px); /* Adjusted width */
-      margin-right: 1px; /* Added margin-right for spacing */
+      /* Custom CSS for response container */
+      .response-container {
+        max-width: 800px;
+        background-color: #f0f0f0;/* Light grey background */
+        padding: 20px; /* Add padding for better spacing */
+        margin-top: 20px; /* Add margin to separate from other content */
+        border-radius: 10px; /* Add rounded corners for aesthetics */
+        color: black;
+        border: 2px solid rgb(211, 0, 141);
+        margin-left: 22%;
+      }
+  
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 40px;
+        height: 20px;
+        margin-left: 5px;
+        margin-top: 14px;
+      }
       
-    }
-
-    /* Adjusting the search bar */
-    #query {
-      width: calc(100% - 130px); /* Adjusted width */
-      height: 45px;
-      display: inline-block;
-    }
-
-    /* Adjusting the button */
-    .btn-primary {
-      height: 45px;
-      vertical-align: top;
-      background-color: black; /* Make the button black */
-      margin-left: 0.5px; /* Adjust margin to push it more towards the right */
-      border-color: black;
-      border-radius: 10px;
-    }
-
-    /* Adjusting the internet container */
-    .internet-container {
-      background-color: #f0f0f0;
-      padding: 20px;
-      margin-top: 20px; 
-      border-radius: 10px; 
-      color: black;
-      max-width: 800px;
-      border: 2px solid rgb(211, 0, 141);
-      margin-left: 22%;
-    }
-
-    .internet {
-      color: white;
-      margin-top: 30px;
-      margin-left: 22%;
-    }
-
-    /* Adjust the position of the switch */
-    .form-check {
-      display: flex;
-      align-items: center; /* Align vertically */
-      margin-bottom: 10px; /* Add margin bottom for better spacing */
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+  
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+  
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 12px;
+        width: 12px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+  
+      input:checked+.slider {
+        background-color: rgb(211, 0, 141);
+      }
+  
+      input:focus+.slider {
+        box-shadow: 0 0 1px rgb(211, 0, 141);
+      }
+  
+      input:checked+.slider:before {
+        -webkit-transform: translateX(19px);
+        -ms-transform: translateX(19px);
+        transform: translateX(19px);
+      }
+  
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 10px;
+      }
+  
+      .slider.round:before {
+        border-radius: 50%;
+      }
+  
+      .labe {
+        text-decoration: solid;
+        color: white;
+        font-size: medium;
+      }
+  
+      body {
+        background-image: url("/static/back2.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+      }
+  
+      .input-group {
+        max-width: calc(100% - 10px); /* Adjusted width */
+        margin-right: 10px /* Added margin-right for spacing */
+  
+      }
+  
+      .input-group .form-control{
+        max-width: calc(50% - 10px); /* Adjusted width */
+        margin-right: 1px; /* Added margin-right for spacing */
+        
+      }
+  
+      /* Adjusting the search bar */
+      #query {
+        width: calc(100% - 130px); /* Adjusted width */
+        height: 45px;
+        display: inline-block;
+      }
+  
+      /* Adjusting the button */
+      .btn-primary {
+        height: 45px;
+        vertical-align: top;
+        background-color: black; /* Make the button black */
+        margin-left: 0.5px; /* Adjust margin to push it more towards the right */
+        border-color: black;
+        border-radius: 10px;
+      }
+  
+      /* Adjusting the internet container */
+      .internet-container {
+        background-color: #f0f0f0;
+        padding: 20px;
+        margin-top: 20px; 
+        border-radius: 10px; 
+        color: black;
+        max-width: 800px;
+        border: 2px solid rgb(211, 0, 141);
+        margin-left: 22%;
+      }
+  
+      .internet {
+        color: white;
+        margin-top: 30px;
+        margin-left: 22%;
+      }
+  
+      /* Adjust the position of the switch */
+      .form-check {
+        display: flex;
+        align-items: center; /* Align vertically */
+        margin-bottom: 10px; /* Add margin bottom for better spacing */
+        
+      }
+  
       
-    }
-
-    
-
-    .form-check .slider {
-      margin-left: 5px; /* Adjusted margin */
-    }
-
-    /* Adjusting position of form-check relative to input-group */
-    
-
-    .navbar-brand{
-      margin-left: 43%;
-    }
-    
-    .mr-2{
-      margin-left: 40px;
-      margin-top: 10px;
-    }
-
-    .navbar-brand img{
-      height: 30px;
-      margin-right: 10px;
-      margin-bottom: 4px;
-    }
-
-    .container {
-      margin-left: 21%;
-    }
-
-  </style>
+  
+      .form-check .slider {
+        margin-left: 5px; /* Adjusted margin */
+      }
+  
+      /* Adjusting position of form-check relative to input-group */
+      
+  
+      .navbar-brand{
+        margin-left: 43%;
+      }
+      
+      .mr-2{
+        margin-left: 40px;
+        margin-top: 10px;
+      }
+  
+      .navbar-brand img{
+        height: 30px;
+        margin-right: 10px;
+        margin-bottom: 4px;
+      }
+  
+      .container {
+        margin-left: 21%;
+      }
+  
+      /* Media Queries */
+      @media only screen and (max-width: 768px) {
+        .container {
+          margin-left: 0;
+        }
+  
+        .navbar-brand {
+          margin-left: 0;
+          text-align: center;
+          width: 100%;
+        }
+  
+        .mr-2 {
+          margin-left: 0;
+          margin-top: 10px;
+        }
+  
+        .internet-container,
+        .response-container {
+          margin-left: 0;
+          max-width: 100%;
+        }
+  
+        .input-group .form-control {
+          max-width: calc(100% - 85px);
+        }
+      }
+  
+      @media only screen and (max-width: 576px) {
+        .navbar-brand img {
+          height: 25px;
+          margin-right: 5px;
+          margin-bottom: 3px;
+        }
+      }
+  
+    </style>
 </head>
 
 <body>
